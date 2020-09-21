@@ -111,7 +111,7 @@ private:
         }
         send_ntp_packet(sockfd);
         const int LOOP = 50;
-        while (count < 50) {
+        while (count < LOOP) {
             FD_ZERO(&fds);
             FD_SET(sockfd, &fds);
             timeout.tv_sec = 0;
