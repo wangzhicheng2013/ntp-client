@@ -37,6 +37,7 @@ public:
         struct tm *ptm = localtime(&time_set.tv_sec);
         strftime(buf, sizeof(buf), format, ptm);
         time_str = buf;
+        return true;
     }
     // return -1 if ntp server communication exception
     // return -2 if shell command execute failed
