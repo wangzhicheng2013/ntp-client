@@ -38,15 +38,20 @@ public:
         strftime(buf, sizeof(buf), format, ptm);
         time_str = buf;
     }
-    bool set_ntp_time(const char *ntp_server) {
+    // return -1 if ntp server communication exception
+    // return -2 if shell command execute failed
+    int set_ntp_time(const char *ntp_server) {
         std::string time_str;
         if (false == get_ntp_time(ntp_server, time_str)) {
-            return false;
+            return -1;
         }
         std::string shell_cmd = "date -s '";
         shell_cmd += time_str;
         shell_cmd += "'";
-        return (0 == system(shell_cmd.c_str()));
+        if (system(shell_cmd.c_str())) {
+            return -2;
+        }
+        return 0;
     }
 private:
     inline long ntp_frac(long x) {
